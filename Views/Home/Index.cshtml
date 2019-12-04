@@ -1,0 +1,197 @@
+﻿@{
+    ViewData["Title"] = "Free PDF To JPG Online Converter";
+}
+
+@section metatags
+{
+    <meta charset="utf-8">
+    <meta name="description" content="Convert multiple PDF to JPG instantly, free and online.">
+    <meta property="og:site_name" content="PDF to JPG Online">
+    <meta property="og:title" content="Convert PDF to JPG Online">
+    <meta property="og:description" content="Convert multiple PDF to JPG instantly, free and online.">
+}
+
+<form method="post" enctype="multipart/form-data" id="uploadForm" asp-controller="Upload" asp-action="Index">
+    <div id="app" class="container is-fluid">
+        <div class="level">
+            <div class="level-item has-text-centered">
+                <div class="columns">
+                    <div class="column">
+                        <h1 class="title is-1">
+                            Convert PDF To JPG Online
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="level">
+            <div class="level-item has-text-centered">
+                <div class="columns">
+                    <div class="column">
+                        <h3 class="title is-3">
+                            Convert multiple PDF to JPG instantly, free and online
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="level">
+            <div class="level-left">
+            </div>
+            <div class="level-item has-text-centered">
+                <section>
+                    <b-field>
+                        <b-upload v-model="dropFiles" name="files" accept="application/pdf"
+                                  multiple
+                                  drag-drop>
+                            <section class="section">
+                                <div class="content has-text-centered">
+                                    <p>
+                                        <b-icon icon="upload"
+                                                size="is-large">
+                                        </b-icon>
+                                    </p>
+                                    <p>Drop your files here or click to upload</p>
+                                </div>
+                            </section>
+                        </b-upload>
+                    </b-field>
+                    <div class="tags">
+                        <span v-for="(file, index) in dropFiles"
+                              :key="index"
+                              class="tag is-primary">
+                            {{file.name}}
+                            <button class="delete is-small"
+                                    type="button"
+                                    v-on:click="deleteDropFile(index)"></button>
+                        </span>
+                    </div>
+                </section>
+            </div>
+            <div class="level-right">
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column has-text-centered">
+                <b-progress id="progress" class="progress is-success" show-value v-if="uploadStarted"><label id="lblProgress">Uploading</label></b-progress>
+                <b-button type="is-primary" id="uploadButton" onclick="startUpdatingProgressIndicator()">Upload</b-button>
+            </div>
+        </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-vertical is-8">
+                <div class="tile">
+                    <div class="tile is-parent is-vertical">
+                        <article class="tile is-child notification is-light">
+                            <p class="title">How It Works</p>
+                            <p class="subtitle">Drag and drop your pdf files to the box above. Then you can convert pdf files to jpg and download it free.</p>
+                        </article>
+                    </div>
+                    <div class="tile is-parent">
+                        <article class="tile is-child notification is-light">
+                            <p class="title">Privacy</p>
+                            <p class="subtitle">Your documents will be deleted one hour after conversion.</p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+            <div class="tile is-parent">
+                <article class="tile is-child notification is-light">
+                    <div class="content">
+                        <p class="title">Platform</p>
+                        <p class="subtitle">You can convert pdf to jpeg online with any browser, any operation system.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-vertical is-8">
+                <div class="tile">
+                    <div class="tile is-parent is-vertical">
+                        <article class="tile is-child notification is-light">
+                            <p class="title">Quality</p>
+                            <p class="subtitle">You can convert pdf files to high quality jpg images.</p>
+                        </article>
+                    </div>
+                    <div class="tile is-parent">
+                        <article class="tile is-child notification is-light">
+                            <p class="title">Speed</p>
+                            <p class="subtitle">Pdf to jpg conversion process is fast as lightning.</p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+            <div class="tile is-parent">
+                <article class="tile is-child notification is-light">
+                    <div class="content">
+                        <p class="title">Cloud computing</p>
+                        <p class="subtitle">You don't need any program to install your computer.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts
+{
+    <script>
+        const example = {
+            data: function () {
+                return {
+                    dropFiles: [],
+                    progressValue: 0,
+                    uploadStarted: false
+                }
+            },
+            methods: {
+                deleteDropFile(index) {
+                    this.dropFiles.splice(index, 1)
+                },
+                updateProgressBar(value) {
+                    this.progressValue = value
+                },
+                alert() {
+                    this.$buefy.toast.open({
+                        message: `No files selected`,
+                        type: 'is-danger'
+                    })
+                },
+                alertFileSize() {
+                    this.$buefy.toast.open({
+                        message: `Size limit is 30 MB`,
+                        type: 'is-danger'
+                    })
+                }
+            }
+        }
+
+        const app = new Vue(example)
+        app.$mount('#app')
+
+        function startUpdatingProgressIndicator() {
+            var sizeLimitExceed = false;
+
+            app.dropFiles.forEach(function (file) {
+                if (file.size > 31457280) {
+                    sizeLimitExceed = true;
+                    app.alertFileSize();
+                    return;
+                }
+            });
+
+            if (!sizeLimitExceed) {
+                if (app.dropFiles.length > 0) {
+                    $("#uploadForm").submit();
+
+                    app.uploadStarted = true;
+
+                    $("#uploadButton").hide();
+                }
+                else {
+                    app.alert();
+                }
+            }
+        }
+    </script>
+}

@@ -1,0 +1,79 @@
+﻿@model PdfToJpg.Models.FileDownloadModel
+@{
+    ViewData["Title"] = "Free PDF To JPG Online Converter";
+}
+
+@section metatags
+{
+    <meta charset="utf-8">
+    <meta name="description" content="Convert multiple PDF files to JPG instantly, free and online.">
+    <meta property="og:site_name" content="PDF to JPG Online">
+    <meta property="og:title" content="Convert PDF to JPG Online">
+    <meta property="og:description" content="Convert multiple PDF files to JPG instantly, free and online.">
+}
+
+<div id="app" class="container">
+    <div class="level">
+        <div class="level-item has-text-centered">
+            <div class="columns">
+                <div class="column">
+                    <h1 class="title is-1">
+                        Convert PDF To JPG Online
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="level">
+        <div class="level-item has-text-centered">
+            <div class="columns">
+                <div class="column">
+                    <h3 class="title is-3">
+                        Convert multiple PDF files to JPG instantly, free and online
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @foreach (var item in Model.Files)
+    {
+    <div class="level">
+        <div class="level-item has-text-centered">
+            <div class="columns">
+                <div class="column">
+                    <b-button size="is-medium" type="is-success" onclick="download('@Model.DownloadAllId', '@item.FileName')">@item.FileName</b-button>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+
+    @if(Model.Files.Count > 1)
+    {
+    <div class="level">
+        <div class="level-item has-text-centered">
+            <div class="columns">
+                <div class="column">
+                    <b-button size="is-large" onclick="downloadAll('@Model.DownloadAllId')" type="is-danger">Download All</b-button>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+
+@section Scripts
+{
+    <script>
+        const app = new Vue()
+        app.$mount('#app')
+
+        function downloadAll(id) {
+            document.location.href = "/Download?id=" + id;
+        }
+        function download(id, name) {
+            document.location.href = "/Download?id=" + id + "&name=" + name;
+        }
+    </script>
+}

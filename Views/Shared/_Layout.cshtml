@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PdfToJpg</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149271749-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-149271749-1');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-1898842272233856",
+            enable_page_level_ads: true
+        });
+    </script>
+    @RenderSection("metatags", false)
+</head>
+<body>
+    <div id="app">
+        <div id="navBar">
+            <div class="container body-content">
+                <div class="container is-fluid">
+                    <b-navbar>
+                        <template slot="start">
+                            <b-navbar-item href="/">
+                                <div class="buttons">
+                                    <a class="button is-primary">
+                                        <strong>Convert PDF To JPG</strong>
+                                    </a>
+                                </div>
+                            </b-navbar-item>
+                        </template>
+                    </b-navbar>
+                </div>
+                @RenderBody()
+                <hr />
+                <footer>
+                    <p>&copy; 2019 - PdfToJpg</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
